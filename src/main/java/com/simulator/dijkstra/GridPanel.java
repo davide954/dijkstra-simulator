@@ -52,7 +52,8 @@ public class GridPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 // Prevent interaction if algorithm is running
-                if (mainFrame.isRunning()) return;
+                if (mainFrame.isRunning())
+                    return;
 
                 int col = e.getX() / CELL_SIZE;
                 int row = e.getY() / CELL_SIZE;
@@ -103,6 +104,76 @@ public class GridPanel extends JPanel {
                 isDrawingWall = null; // Reset wall drawing state
             }
         });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                // Prevent interaction if algorithm is running
+                if (mainFrame.isRunning())
+                    return;
+
+                int newCol = e.getX() / CELL_SIZE;
+                int newRow = e.getY() / CELL_SIZE;
+
+                if (isValidCell(newRow, newCol)) {
+                    Cell newCell = grid[newRow][newCol];
+
+                    if (isDraggingStart) {
+                        // Prevent placing start on end or wall
+                        if (!newCell.isEnd && !newCell.isWall && !newCell.equals(mainFrame.getStartCell())) {
+                            mainFrame.setStartCell(newCell); // Update start cell via main frame
+                            mainFrame.clearPath(); // Clear old path state as start point moved
+                            repaint();
+                        }
+                    } else if (isDraggingEnd) {
+                        // Prevent placing end on start or wall
+                        if (!newCell.isStart && !newCell.isWall && !newCell.equals(mainFrame.getEndCell())) {
+                            mainFrame.setEndCell(newCell); // Update end cell via main frame
+                            mainFrame.clearPath(); // Clear old path state as end point moved
+                            repaint();
+                        }
+                    } else if (SwingUtilities.isLeftMouseButton(e) && isDrawingWall != null) {
+                        // Draw/erase walls by dragging
+                        if (!newCell.isStart && !newCell.isEnd) {
+                            applyWallChange(newCell, isDrawingWall);
+                            repaint(); // Redraw the grid after interaction
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Applies the wall change to a cell, also resetting its weight if it becomes a
+     * wall.
+     * 
+     * @param cell   The cell to modify.
+     * @param isWall True to make it a wall, false to remove it.
+     */
+    private void applyWallChange(Cell cell, boolean isWall) {
+        if (cell.isWall != isWall) { // Only change if state is different
+            cell.isWall = isWall;
+            if (isWall) {
+                cell.weight = 1; // Walls have no weight for pathfinding
+                cell.reset(); // Clear any previous pathfinding state on the wall
+            } else {
+                cell.reset(); // When a wall is removed, clear its state
+            }
+            mainFrame.clearPath(); // Clear path if walls change
+        }
+    }
+
+    /**
+     * Checks if the given row and column are within the grid boundaries.
+     * 
+     * @param row The row index.
+     * @param col The column index.
+     * @return true if the cell is valid, false otherwise.
+     */
+    private boolean isValidCell(int row, int col) {
+        return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
+    }
 
     /**
      * Paints the component. This method is called by the Swing framework.
