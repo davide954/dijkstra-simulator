@@ -27,6 +27,26 @@ public class Cell implements Comparable<Cell> {
         this.weight = 1; // Default: weight 1 for all cells
     }
 
+    /**
+     * Resets the cell's state for a new algorithm execution,
+     * while preserving its wall, start, and end status.
+     */
+    public void reset() {
+        this.distance = Integer.MAX_VALUE;
+        this.previous = null;
+        this.isVisited = false;
+        this.isPath = false;
+        this.isCurrent = false;
+    }
+
+    /**
+     * Compares cells based on their distance for the PriorityQueue.
+     * 
+     * @param other The other cell to compare to.
+     * @return A negative integer, zero, or a positive integer as this object
+     *         is less than, equal to, or greater than the specified object.
+     */
+
     @Override
     public int compareTo(Cell other) {
         return Integer.compare(this.distance, other.distance);
