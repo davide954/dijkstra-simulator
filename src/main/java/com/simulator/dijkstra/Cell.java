@@ -9,13 +9,14 @@ public class Cell implements Comparable<Cell> {
     public boolean isWall;
     public boolean isStart;
     public boolean isEnd;
-    public boolean isPath = false;
-    public boolean isCurrent;
+    public boolean isPath = false; // To indicate if the cell is part of the final path
+    public boolean isCurrent; // To highlight the cell currently being processed
+    public int weight; // New: weight to traverse the cell
 
     public Cell(int row, int col) {
         this.row = row;
         this.col = col;
-        this.distance = Integer.MAX_VALUE;
+        this.distance = Integer.MAX_VALUE; // Initially infinite distance
         this.previous = null;
         this.isVisited = false;
         this.isWall = false;
@@ -23,6 +24,7 @@ public class Cell implements Comparable<Cell> {
         this.isEnd = false;
         this.isPath = false;
         this.isCurrent = false;
+        this.weight = 1; // Default: weight 1 for all cells
     }
 
     @Override
