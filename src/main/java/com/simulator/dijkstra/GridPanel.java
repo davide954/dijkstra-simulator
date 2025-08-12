@@ -44,7 +44,65 @@ public class GridPanel extends JPanel {
         addMouseListeners();
     }
 
-    // Mouse listeners will be added in a subsequent commit
+    /**
+     * Adds mouse listeners for interaction (click, drag).
+     */
+    private void addMouseListeners() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Prevent interaction if algorithm is running
+                if (mainFrame.isRunning()) return;
+
+                int col = e.getX() / CELL_SIZE;
+                int row = e.getY() / CELL_SIZE;
+
+                if (isValidCell(row, col)) {
+                    Cell clickedCell = grid[row][col];
+
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        if (e.isShiftDown()) {
+                            // Shift + Left-click to set start cell
+                            if (!clickedCell.isWall && !clickedCell.isEnd) {
+                                mainFrame.setStartCell(clickedCell);
+                                mainFrame.clearPath(); // Clear old path state as start point moved
+                            }
+                        } else if (e.isControlDown()) {
+                            // Control + Left-click to set end cell
+                            if (!clickedCell.isWall && !clickedCell.isStart) {
+                                mainFrame.setEndCell(clickedCell);
+                                mainFrame.clearPath(); // Clear old path state as end point moved
+                            }
+                        } else if (clickedCell.equals(mainFrame.getStartCell())) {
+                            draggedCell = clickedCell;
+                            isDraggingStart = true;
+                        } else if (clickedCell.equals(mainFrame.getEndCell())) {
+                            draggedCell = clickedCell;
+                            isDraggingEnd = true;
+                        } else {
+                            // Toggle wall if no modifier keys are pressed
+                            isDrawingWall = !clickedCell.isWall;
+                            applyWallChange(clickedCell, isDrawingWall);
+                        }
+                    } else if (SwingUtilities.isRightMouseButton(e)) {
+                        // Change weight (e.g., 1 -> 5 -> 1)
+                        if (!clickedCell.isWall && !clickedCell.isStart && !clickedCell.isEnd) {
+                            clickedCell.weight = (clickedCell.weight == 1) ? 5 : 1; // Toggle weight between 1 and 5
+                            mainFrame.clearPath(); // Clear path if weights change
+                        }
+                    }
+                    repaint(); // Redraw the grid after interaction
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                draggedCell = null;
+                isDraggingStart = false;
+                isDraggingEnd = false;
+                isDrawingWall = null; // Reset wall drawing state
+            }
+        });
 
     /**
      * Paints the component. This method is called by the Swing framework.
