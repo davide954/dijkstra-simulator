@@ -113,3 +113,39 @@ public class DijkstraPathfinding extends JFrame {
         this.endCell.isEnd = true;
         this.endCell.reset(); // Reset the new end cell's state as well (e.g., distance, previous)
     }
+
+    /**
+     * Main constructor for the Dijkstra Pathfinding Visualizer application.
+     */
+    public DijkstraPathfinding() {
+        setTitle("Dijkstra Pathfinding Visualizer");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        initializeGrid();
+        setupUI();
+
+        pack(); // Sizes the frame so that all its contents are at or above their preferred
+                // sizes.
+        setLocationRelativeTo(null); // Centers the frame on the screen.
+        setVisible(true); // Makes the frame visible.
+    }
+
+    /**
+     * Initializes the grid with Cell objects and sets default start/end points.
+     */
+    private void initializeGrid() {
+        grid = new Cell[ROWS][COLS];
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                grid[row][col] = new Cell(row, col);
+            }
+        }
+
+        // Set default start and end points
+        // It's crucial to use the setter methods here to ensure proper state
+        // initialization
+        setStartCell(grid[ROWS / 2][5]);
+        setEndCell(grid[ROWS / 2][COLS - 5]);
+    }
