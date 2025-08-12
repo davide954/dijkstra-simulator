@@ -55,8 +55,61 @@ public class DijkstraPathfinding extends JFrame {
 
     /**
      * Check if the algorithm is currently running.
+     * 
      * @return true if running, false otherwise.
      */
     public boolean isRunning() {
         return isRunning;
+    }
+
+    /**
+     * Get the start cell.
+     * 
+     * @return the current start cell.
+     */
+    public Cell getStartCell() {
+        return startCell;
+    }
+
+    /**
+     * Set the start cell.
+     * This method handles updating the old and new start cells' states.
+     * 
+     * @param cell the new start cell.
+     */
+    public void setStartCell(Cell cell) {
+        // Clear the old start cell's status and reset its pathfinding state
+        if (this.startCell != null) {
+            this.startCell.isStart = false;
+            this.startCell.reset(); // Ensure old start cell is properly reset
+        }
+        this.startCell = cell;
+        this.startCell.isStart = true;
+        this.startCell.reset(); // Reset the new start cell's state as well (e.g., distance, previous)
+    }
+
+    /**
+     * Get the end cell.
+     * 
+     * @return the current end cell.
+     */
+    public Cell getEndCell() {
+        return endCell;
+    }
+
+    /**
+     * Set the end cell.
+     * This method handles updating the old and new end cells' states.
+     * 
+     * @param cell the new end cell.
+     */
+    public void setEndCell(Cell cell) {
+        // Clear the old end cell's status and reset its pathfinding state
+        if (this.endCell != null) {
+            this.endCell.isEnd = false;
+            this.endCell.reset(); // Ensure old end cell is properly reset
+        }
+        this.endCell = cell;
+        this.endCell.isEnd = true;
+        this.endCell.reset(); // Reset the new end cell's state as well (e.g., distance, previous)
     }
