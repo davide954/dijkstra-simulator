@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.simulator.dijkstra</groupId>
+  <artifactId>dijkstra-simulator</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>Dijkstra Pathfinding Visualizer</name>
+  <description>A Java Swing application that demonstrates the Dijkstra shortest path algorithm with real-time visualization</description>
+  <url>https://github.com/davide954/dijkstra-simulator</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- clean lifecycle -->
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        
+        <!-- default lifecycle, jar packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.11.0</version>
+          <configuration>
+            <source>11</source>
+            <target>11</target>
+          </configuration>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.3.0</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>com.simulator.dijkstra.DijkstraPathfinding</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+        
+        <!-- site lifecycle -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.1</version>
+        </plugin>
+        
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.4.5</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+    <plugins>
+      <!-- Plugin per creare un JAR eseguibile con tutte le dipendenze -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.simulator.dijkstra.DijkstraPathfinding</mainClass>
+                </transformer>
+              </transformers>
+              <finalName>dijkstra-pathfinding</finalName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
