@@ -5,7 +5,6 @@ dijkstra-simulator/
 ├── .gitignore
 ├── .github/
 ├── src/
-└── target/
 ```
 
 ## Dijkstra Pathfinding Visualizer
