@@ -36,10 +36,11 @@ public class DijkstraSolver {
         this.gridPanel = gridPanel;
         this.delay = delay;
     }
-    
+
     /**
      * Executes Dijkstra's algorithm to find the shortest path.
      * Visualizes the process step by step.
+     * 
      * @return true if a path is found, false otherwise.
      * @throws InterruptedException if the thread is interrupted during the delay.
      */
@@ -87,13 +88,14 @@ public class DijkstraSolver {
                     continue;
                 }
 
-                // Calculate tentative distance (current cell's distance + cost to reach neighbor)
+                // Calculate tentative distance (current cell's distance + cost to reach
+                // neighbor)
                 int tentativeDistance = current.distance + neighbor.weight;
 
                 // If a shorter path to the neighbor is found
                 if (tentativeDistance < neighbor.distance) {
                     neighbor.distance = tentativeDistance; // Update distance
-                    neighbor.previous = current;           // Set previous cell for path reconstruction
+                    neighbor.previous = current; // Set previous cell for path reconstruction
 
                     // Remove and re-add to update its priority in the PriorityQueue.
                     // This simulates a "decrease-key" operation.
@@ -104,5 +106,31 @@ public class DijkstraSolver {
         }
         return false; // No path found
     }
+/**
+ * Reconstructs the shortest path from the end cell back to the start cell.
+ * This method visually marks each cell along the optimal path and animates
+ * the drawing process with a delay, updating the grid panel step by step.
+ */
+public void reconstructPath() {
+    // Start from the cell before the end cell to avoid overwriting endCell color
+    Cell current = endCell.previous;
+    int step = 0; // Step counter for visualization
+    // Traverse backwards from end to start, marking each cell as part of the path
+    while (current != null && !current.equals(startCell)) {
+        current.isPath = true; // Mark this cell as part of the optimal path
 
+        if(step % 3 == 0){
+            try {
+                Thread.sleep(delay); // Delay to visualize path animation
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Restore interrupt status if interrupted
+            }
+        }
+
+        step++;
+        current = current.previous; // Move to the previous cell in the path
+    }
+
+    // Optional: do NOT mark the start cell as part of the path to keep its green color
+    gridPanel.repaint(); // Final repaint to ensure all path cells are shown
 }
