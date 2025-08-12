@@ -17,17 +17,15 @@ public class DijkstraSolver {
     private Cell startCell;
     private Cell endCell;
     private GridPanel gridPanel; // Used for visual updates
-    private int delay; // Delay for visualization steps
+    private int delay;           // Delay for visualization steps
 
     /**
      * Constructs a DijkstraSolver.
-     * 
-     * @param grid      The 2D array of Cell objects.
+     * @param grid The 2D array of Cell objects.
      * @param startCell The starting cell for the pathfinding.
-     * @param endCell   The target cell for the pathfinding.
-     * @param gridPanel The GridPanel instance to request repaints for
-     *                  visualization.
-     * @param delay     The delay in milliseconds between each visualization step.
+     * @param endCell The target cell for the pathfinding.
+     * @param gridPanel The GridPanel instance to request repaints for visualization.
+     * @param delay The delay in milliseconds between each visualization step.
      */
     public DijkstraSolver(Cell[][] grid, Cell startCell, Cell endCell, GridPanel gridPanel, int delay) {
         this.grid = grid;
@@ -40,7 +38,6 @@ public class DijkstraSolver {
     /**
      * Executes Dijkstra's algorithm to find the shortest path.
      * Visualizes the process step by step.
-     * 
      * @return true if a path is found, false otherwise.
      * @throws InterruptedException if the thread is interrupted during the delay.
      */
@@ -88,14 +85,13 @@ public class DijkstraSolver {
                     continue;
                 }
 
-                // Calculate tentative distance (current cell's distance + cost to reach
-                // neighbor)
+                // Calculate tentative distance (current cell's distance + cost to reach neighbor)
                 int tentativeDistance = current.distance + neighbor.weight;
 
                 // If a shorter path to the neighbor is found
                 if (tentativeDistance < neighbor.distance) {
                     neighbor.distance = tentativeDistance; // Update distance
-                    neighbor.previous = current; // Set previous cell for path reconstruction
+                    neighbor.previous = current;           // Set previous cell for path reconstruction
 
                     // Remove and re-add to update its priority in the PriorityQueue.
                     // This simulates a "decrease-key" operation.
@@ -106,9 +102,11 @@ public class DijkstraSolver {
         }
         return false; // No path found
     }
+
 /**
  * Reconstructs the shortest path from the end cell back to the start cell.
- * This method visually marks each cell along the optimal path and animates
+ * Th
+
  * the drawing process with a delay, updating the grid panel step by step.
  */
 public void reconstructPath() {
@@ -133,4 +131,27 @@ public void reconstructPath() {
 
     // Optional: do NOT mark the start cell as part of the path to keep its green color
     gridPanel.repaint(); // Final repaint to ensure all path cells are shown
+}
+
+    /**
+     * Gets the valid neighbors (up, down, left, right) of a given cell.
+     * @param cell The cell for which to find neighbors.
+     * @return A list of valid neighboring cells.
+     */
+    private List<Cell> getNeighbors(Cell cell) {
+        List<Cell> neighbors = new ArrayList<>();
+        int[] deltaRow = {-1, 1, 0, 0}; // Up, Down
+        int[] deltaCol = {0, 0, -1, 1}; // Left, Right
+
+        for (int i = 0; i < 4; i++) {
+            int newRow = cell.row + deltaRow[i];
+            int newCol = cell.col + deltaCol[i];
+
+            // Check grid boundaries
+            if (newRow >= 0 && newRow < grid.length && newCol >= 0 && newCol < grid[0].length) {
+                neighbors.add(grid[newRow][newCol]);
+            }
+        }
+        return neighbors;
+    }
 }
