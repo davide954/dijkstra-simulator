@@ -149,3 +149,52 @@ public class DijkstraPathfinding extends JFrame {
         setStartCell(grid[ROWS / 2][5]);
         setEndCell(grid[ROWS / 2][COLS - 5]);
     }
+
+    /**
+     * Sets up the user interface components (grid panel, control panel, instruction
+     * panel).
+     */
+    private void setupUI() {
+        setLayout(new BorderLayout());
+
+        // Main grid panel
+        gridPanel = new GridPanel(grid, this);
+        add(gridPanel, BorderLayout.CENTER);
+
+        // Control panel for buttons and status label
+        JPanel controlPanel = new JPanel(new FlowLayout());
+
+        startButton = new JButton("Start Dijkstra");
+        startButton.addActionListener(e -> runDijkstra());
+
+        JButton resetButton = new JButton("Reset Grid");
+        resetButton.addActionListener(e -> resetGrid());
+
+        JButton clearPathButton = new JButton("Clear Path");
+        clearPathButton.addActionListener(e -> clearPath());
+
+        statusLabel = new JLabel(
+                "Ready. Shift+Click for Start, Ctrl+Click for End. Drag walls/points. Right-click for weights.");
+
+        controlPanel.add(startButton);
+        controlPanel.add(resetButton);
+        controlPanel.add(clearPathButton);
+        controlPanel.add(statusLabel);
+
+        add(controlPanel, BorderLayout.SOUTH);
+
+        // Instructions panel
+        JPanel instructionPanel = new JPanel();
+        instructionPanel.setLayout(new BoxLayout(instructionPanel, BoxLayout.Y_AXIS));
+        instructionPanel.setBorder(BorderFactory.createTitledBorder("Instructions"));
+
+        instructionPanel.add(new JLabel("• Shift + Left-click to set Start (Green)"));
+        instructionPanel.add(new JLabel("• Ctrl + Left-click to set End (Red)"));
+        instructionPanel.add(new JLabel("• Left-click & drag to create/remove walls (Black)"));
+        instructionPanel.add(new JLabel("• Right-click to change cell weight (Gray numbers)"));
+        instructionPanel.add(new JLabel("• Drag green (start) or red (end) points to reposition"));
+        instructionPanel.add(new JLabel("• Light Blue: Visited cells, Yellow: Optimal path"));
+        instructionPanel.add(new JLabel("• Orange: Current cell being processed"));
+
+        add(instructionPanel, BorderLayout.NORTH);
+    }
