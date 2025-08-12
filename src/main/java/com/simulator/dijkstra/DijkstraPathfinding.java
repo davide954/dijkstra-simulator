@@ -198,3 +198,29 @@ public class DijkstraPathfinding extends JFrame {
 
         add(instructionPanel, BorderLayout.NORTH);
     }
+
+    /**
+     * Performs a complete reset of the grid, clearing walls, weights, and
+     * pathfinding states.
+     */
+    private void resetGrid() {
+        if (isRunning)
+            return; // Prevent reset while algorithm is running
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                Cell cell = grid[row][col];
+                cell.isWall = false;
+                cell.weight = 1; // Reset weight to default
+                cell.reset(); // Reset pathfinding-specific states including isCurrent
+            }
+        }
+        // Re-set start/end points to default positions, ensuring their status is
+        // correct
+        // Calling setStartCell/setEndCell will handle resetting the old positions
+        setStartCell(grid[ROWS / 2][5]);
+        setEndCell(grid[ROWS / 2][COLS - 5]);
+
+        statusLabel.setText("Grid reset.");
+        gridPanel.repaint(); // Redraw the grid
+    }
