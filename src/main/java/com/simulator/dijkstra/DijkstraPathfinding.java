@@ -224,3 +224,32 @@ public class DijkstraPathfinding extends JFrame {
         statusLabel.setText("Grid reset.");
         gridPanel.repaint(); // Redraw the grid
     }
+
+    /**
+     * Clears only the path and visited cells, preserving walls and start/end
+     * points.
+     */
+    public void clearPath() { // Made public so GridPanel can call it
+        if (isRunning)
+            return; // Prevent clearing while algorithm is running
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                Cell cell = grid[row][col];
+                // Only reset pathfinding specific states, not wall/start/end
+                if (!cell.isStart && !cell.isEnd && !cell.isWall) {
+                    cell.reset(); // Reset state for empty/visited cells
+                } else {
+                    // For start/end/wall cells, ensure their pathfinding attributes are also clean
+                    cell.distance = Integer.MAX_VALUE;
+                    cell.previous = null;
+                    cell.isVisited = false;
+                    cell.isPath = false;
+                    cell.isCurrent = false;
+                }
+            }
+        }
+
+        statusLabel.setText("Path cleared.");
+        gridPanel.repaint(); // Redraw the grid
+    }
