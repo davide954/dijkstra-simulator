@@ -253,3 +253,55 @@ public class DijkstraPathfinding extends JFrame {
         statusLabel.setText("Path cleared.");
         gridPanel.repaint(); // Redraw the grid
     }
+
+    /**
+     * Executes Dijkstra's algorithm in a background thread to keep the UI
+     * responsive.
+     * Visualizes the pathfinding process.
+     */
+    private void runDijkstra() {
+        if (isRunning)
+            return; // Prevent running multiple instances
+
+        clearPath(); // Clear any previous pathfinding results
+        isRunning = true;
+        startButton.setEnabled(false); // Disable start button during execution
+        statusLabel.setText("Running Dijkstra's algorithm...");
+
+        // SwingWorker for background execution to avoid blocking the UI
+        SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                // Initialize DijkstraSolver with current grid, start/end, panel for repaint,
+                // and delay
+                DijkstraSolver solver = new DijkstraSolver(grid, startCell, endCell, gridPanel, DELAY);
+                return solver.solve(); // Execute the algorithm
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean found = get(); // Get the result from doInBackground
+                    if (found) {
+                        // Reconstruct the path after the algorithm finishes
+                        // A new solver instance is created to call reconstructPath,
+                        // as solve() might modify internal state
+                        DijkstraSolver solver = new DijkstraSolver(grid, startCell, endCell, gridPanel, DELAY);
+                        solver.reconstructPath();
+                        statusLabel.setText("Path found! Total distance: " + endCell.distance); // Display total
+                                                                                                // distance
+                    } else {
+                        statusLabel.setText("No path found.");
+                    }
+                } catch (Exception e) {
+                    statusLabel.setText("Error during execution.");
+                    e.printStackTrace(); // Print stack trace for debugging
+                } finally {
+                    isRunning = false; // Mark algorithm as finished
+                    startButton.setEnabled(true); // Re-enable start button
+                }
+            }
+        };
+
+        worker.execute(); // Start the background worker
+    }
