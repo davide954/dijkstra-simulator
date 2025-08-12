@@ -305,3 +305,24 @@ public class DijkstraPathfinding extends JFrame {
 
         worker.execute(); // Start the background worker
     }
+
+    /**
+     * Main method to start the application.
+     * Sets the system look and feel for a native look.
+     * 
+     * @param args Command line arguments (not used).
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                // Try to set system look and feel for a native look
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | UnsupportedLookAndFeelException e) {
+                // Use default look and feel if system one fails
+                System.out.println("Using default look and feel");
+            }
+            new DijkstraPathfinding(); // Create and show the main application frame
+        });
+    }
+}
