@@ -26,5 +26,5 @@ bin/
 .DS_Store
 Thumbs.db
 
-# Ignore Maven user settings file (contiene token e credenziali personali)
+# Ignore Maven user settings file
 /settings.xml

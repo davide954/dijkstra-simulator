@@ -1,13 +1,4 @@
-```
-dijkstra-simulator/
-├── README.md          
-├── pom.xml
-├── .gitignore
-├── .github/
-└── src/
-```
-
-## Dijkstra Pathfinding Visualizer
+# Dijkstra Pathfinding Visualizer
 
 A Java Swing application that demonstrates Dijkstra's shortest path algorithm with real-time visualization. The application provides an interactive grid where users can create obstacles, adjust weights, and watch the algorithm find the optimal path step by step.
 
@@ -15,14 +6,14 @@ A Java Swing application that demonstrates Dijkstra's shortest path algorithm wi
 
 - **Interactive Grid Interface**: Click and drag to create walls and modify the environment
 - **Real-time Algorithm Visualization**: Watch Dijkstra's algorithm explore the grid in real-time
-- **Weighted Pathfinding**: Support for cells with different traversal costs
+- **Weighted Pathfinding**: Support for cells with different traversal costs (weights 1 and 5)
 - **Dynamic Start/End Points**: Drag and drop start and end positions anywhere on the grid
 - **Step-by-step Animation**: Configurable delay to observe algorithm progression
 - **Color-coded Visualization**: Clear visual distinction between different cell states
 
 ## Requirements
 
-- Java 21 or higher
+- Java 17 or higher
 - Maven 3.6.0 or higher
 
 ## Installation
@@ -50,7 +41,7 @@ mvn exec:java -Dexec.mainClass="com.simulator.dijkstra.DijkstraPathfinding"
 
 ```bash
 mvn clean package
-java -jar target/dijkstra-pathfinding-1.0-SNAPSHOT.jar
+java -jar target/dijkstra-pathfinding-1.4.0.jar
 ```
 
 ## Usage
@@ -164,7 +155,7 @@ The application uses these default settings:
 
 - Grid size: 20 rows × 30 columns
 - Cell size: 30×30 pixels
-- Animation delay: 10 milliseconds
+- Animation delay: 5 milliseconds (configurable in code)
 - Default cell weight: 1
 - Alternative cell weight: 5
 
@@ -176,6 +167,7 @@ These can be modified in the source code constants section.
 - Grid size is fixed at compile time
 - Only supports 4-directional movement (no diagonal)
 - Single algorithm implementation (Dijkstra only)
+- Cell weights are limited to values 1 and 5
 
 ## License
 
@@ -189,6 +181,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Version History
 
+- **v1.4.0**: Current version with improved algorithm efficiency and visualization
 - **v1.3**: Added weighted cells and improved visualization
 - **v1.2**: Enhanced UI with drag-and-drop functionality  
 - **v1.1**: Basic pathfinding with wall creation
