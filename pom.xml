@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- Project identifiers -->
   <groupId>com.simulator.dijkstra</groupId>
   <artifactId>dijkstra-simulator</artifactId>
   <version>1.4.0</version>
+  <packaging>jar</packaging>
 
   <name>Dijkstra Pathfinding Visualizer</name>
   <description>A Java Swing application that demonstrates the Dijkstra shortest path algorithm with real-time visualization</description>
   <url>https://github.com/davide954/dijkstra-simulator</url>
 
+  <!-- SCM info (useful for deployment and release plugins) -->
+  <scm>
+    <connection>scm:git:https://github.com/davide954/dijkstra-simulator.git</connection>
+    <developerConnection>scm:git:ssh://github.com/davide954/dijkstra-simulator.git</developerConnection>
+    <url>https://github.com/davide954/dijkstra-simulator</url>
+  </scm>
+
+  <!-- Java compilation settings -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Standardizzato su Java 17 per compatibilità con GitHub Actions -->
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
+  <!-- Project dependencies -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -30,30 +40,23 @@
     </dependency>
   </dependencies>
 
-  <!-- Sezione per pubblicare il pacchetto su GitHub Packages -->
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub davide954 Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
-    </repository>
-  </distributionManagement>
-
+  <!-- Build configuration -->
   <build>
     <pluginManagement>
       <plugins>
-        <!-- clean lifecycle -->
+        <!-- Lifecycle: clean -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.3.2</version>
         </plugin>
 
-        <!-- default lifecycle, jar packaging -->
+        <!-- Lifecycle: resources -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.1</version>
         </plugin>
 
+        <!-- Lifecycle: compile -->
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.12.1</version>
@@ -64,11 +67,13 @@
           </configuration>
         </plugin>
 
+        <!-- Lifecycle: test -->
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.2.5</version>
         </plugin>
 
+        <!-- Lifecycle: package -->
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.3.0</version>
@@ -86,17 +91,19 @@
           </configuration>
         </plugin>
 
+        <!-- Lifecycle: install -->
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>3.1.1</version>
         </plugin>
 
+        <!-- Lifecycle: deploy -->
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>3.1.1</version>
         </plugin>
 
-        <!-- site lifecycle -->
+        <!-- Lifecycle: site -->
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>4.0.0-M13</version>
@@ -107,7 +114,7 @@
           <version>3.5.0</version>
         </plugin>
 
-        <!-- Plugin per eseguire l'applicazione -->
+        <!-- Run application -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
@@ -120,7 +127,7 @@
     </pluginManagement>
 
     <plugins>
-      <!-- Plugin per creare un JAR eseguibile con tutte le dipendenze -->
+      <!-- Create a self-contained executable JAR (with dependencies) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -146,7 +153,7 @@
     </plugins>
   </build>
 
-  <!-- Profili per diversi ambienti -->
+  <!-- Profiles for different environments -->
   <profiles>
     <profile>
       <id>development</id>
@@ -157,7 +164,7 @@
         <maven.compiler.debug>true</maven.compiler.debug>
       </properties>
     </profile>
-    
+
     <profile>
       <id>release</id>
       <properties>
@@ -166,4 +173,21 @@
       </properties>
     </profile>
   </profiles>
+
+  <!-- Deployment configuration for GitHub Packages -->
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
+    </repository>
+  </distributionManagement>
+
 </project>
+<!--
+  This POM file is used to build the Dijkstra Pathfinding Visualizer application.
+  It includes dependencies, plugins, and configurations necessary for building,
+  testing, and running the application.
+
+  For more information, visit: https://github.com/davide954/dijkstra-simulator
+-->
