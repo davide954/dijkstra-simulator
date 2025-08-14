@@ -112,7 +112,6 @@
           <version>3.11.2</version>
           <configuration>
             <source>17</source>
-            <target>17</target>
             <encoding>UTF-8</encoding>
             <charset>UTF-8</charset>
             <docencoding>UTF-8</docencoding>
@@ -120,15 +119,15 @@
             <nohelp>true</nohelp>
             <failOnError>false</failOnError>
             <failOnWarnings>false</failOnWarnings>
+            <quiet>true</quiet>
             <additionalJOptions>
               <additionalJOption>-Xdoclint:none</additionalJOption>
             </additionalJOptions>
-            <windowTitle>${project.name} - API Documentation</windowTitle>
             <doctitle>${project.name} v${project.version} - API Documentation</doctitle>
             <bottom>
               <![CDATA[
                 Copyright &#169; 2025 ${project.name}. All rights reserved.<br/>
-                Generated on {currentDate}
+                Built with Maven on {currentDate}
               ]]>
             </bottom>
             <links>
@@ -138,6 +137,7 @@
             <version>true</version>
             <use>true</use>
             <splitindex>true</splitindex>
+            <detectJavaApiLink>false</detectJavaApiLink>
           </configuration>
           <executions>
             <execution>
