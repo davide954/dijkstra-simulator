@@ -170,6 +170,7 @@
                 </transformer>
               </transformers>
               <finalName>dijkstra-pathfinding-${project.version}</finalName>
+              <outputDirectory>${project.build.directory}</outputDirectory>
               <createDependencyReducedPom>false</createDependencyReducedPom>
             </configuration>
           </execution>
