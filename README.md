@@ -41,7 +41,7 @@ mvn exec:java -Dexec.mainClass="com.simulator.dijkstra.DijkstraPathfinding"
 
 ```bash
 mvn clean package
-java -jar target/dijkstra-pathfinding-1.4.0.jar
+java -jar target/dijkstra-pathfinding-1.4.1.jar
 ```
 
 ## Usage
@@ -181,7 +181,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## Version History
 
-- **v1.4.0**: Current version with improved algorithm efficiency and visualization
+- **v1.4**: Current version with improved algorithm efficiency and visualization
 - **v1.3**: Added weighted cells and improved visualization
 - **v1.2**: Enhanced UI with drag-and-drop functionality  
 - **v1.1**: Basic pathfinding with wall creation
