@@ -1,34 +1,66 @@
 package com.simulator.dijkstra;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * GridPanel class for drawing the grid and handling user interactions
  * such as creating walls, changing cell weights, and moving start/end points.
  */
 public class GridPanel extends JPanel {
+    /** Size of each cell in pixels for rendering. */
     private static final int CELL_SIZE = 30;
-
     // Colors for visualization
-    private static final Color COLOR_START = new Color(0, 153, 0); // Green
-    private static final Color COLOR_END = new Color(153, 0, 0); // Red
-    private static final Color COLOR_WALL = new Color(0, 0, 0); // Black
-    private static final Color COLOR_EMPTY = new Color(255, 255, 255); // White
-    private static final Color COLOR_VISITED = new Color(173, 216, 230); // Light Blue
-    private static final Color COLOR_PATH = new Color(255, 255, 0); // Yellow
-    private static final Color COLOR_CURRENT = new Color(255, 165, 0); // Orange
+    /** Color for the start cell (bright green). */
+    private static final Color COLOR_START = new Color(0, 153, 0);
+    
+    /** Color for the end cell (dark red). */
+    private static final Color COLOR_END = new Color(153, 0, 0);
+    
+    /** Color for wall cells (black). */
+    private static final Color COLOR_WALL = new Color(0, 0, 0);
+    
+    /** Color for empty cells (white). */
+    private static final Color COLOR_EMPTY = new Color(255, 255, 255);
+    
+    /** Color for visited cells (light blue). */
+    private static final Color COLOR_VISITED = new Color(173, 216, 230);
+    
+    /** Color for cells in the optimal path (yellow). */
+    private static final Color COLOR_PATH = new Color(255, 255, 0);
+    
+    /** Color for the currently processing cell (orange). */
+    private static final Color COLOR_CURRENT = new Color(255, 165, 0);
 
+    /** The 2D grid of cells to be displayed. */
     private Cell[][] grid;
-    private DijkstraPathfinding mainFrame; // Reference to the main frame
+    
+    /** Reference to the main application frame for state updates. */
+    private DijkstraPathfinding mainFrame;
+    
+    /** The cell currently being dragged by the user, null if none. */
     private Cell draggedCell = null;
+    
+    /** Flag indicating if the start cell is being dragged. */
     private boolean isDraggingStart = false;
+    
+    /** Flag indicating if the end cell is being dragged. */
     private boolean isDraggingEnd = false;
 
-    // To track if we are initially toggling a wall or drawing it
-    private Boolean isDrawingWall = null; // true if drawing, false if erasing, null if not drawing
+    /** 
+     * State for wall drawing mode: true for drawing walls, false for erasing walls, 
+     * null when not in wall drawing mode. 
+     */
+    private Boolean isDrawingWall = null;
 
     /**
      * Constructs a GridPanel.
