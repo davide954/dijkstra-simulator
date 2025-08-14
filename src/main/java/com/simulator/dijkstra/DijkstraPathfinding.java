@@ -39,18 +39,37 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @since 2025
  */
 public class DijkstraPathfinding extends JFrame {
+    /** Number of rows in the pathfinding grid. */
     private static final int ROWS = 20;
+    
+    /** Number of columns in the pathfinding grid. */
     private static final int COLS = 30;
+    
+    /** Size of each cell in pixels for display. */
     private static final int CELL_SIZE = 30;
-    private static final int DELAY = 5; // Milliseconds delay to visualize steps
+    
+    /** Delay in milliseconds between algorithm visualization steps. */
+    private static final int DELAY = 5;
 
+    /** The 2D grid of cells representing the pathfinding area. */
     private Cell[][] grid;
+    
+    /** The starting cell for pathfinding operations. */
     private Cell startCell;
+    
+    /** The destination cell for pathfinding operations. */
     private Cell endCell;
+    
+    /** The panel responsible for rendering the grid visualization. */
     private GridPanel gridPanel;
 
+    /** Flag indicating whether the pathfinding algorithm is currently running. */
     private boolean isRunning = false;
+    
+    /** Button to start the Dijkstra pathfinding algorithm. */
     private JButton startButton;
+    
+    /** Label to display status messages and instructions to the user. */
     private JLabel statusLabel;
 
     /**
