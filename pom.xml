@@ -5,7 +5,7 @@
 
   <groupId>com.simulator.dijkstra</groupId>
   <artifactId>dijkstra-simulator</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
 
   <name>Dijkstra Pathfinding Visualizer</name>
   <description>A Java Swing application that demonstrates the Dijkstra shortest path algorithm with real-time visualization</description>
@@ -13,7 +13,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Standardizzato su Java 17 per compatibilità con GitHub Actions -->
+    <!-- Standardized to Java 17 for compatibility with GitHub Actions -->
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.release>17</maven.compiler.release>
@@ -96,7 +96,7 @@
           <version>3.5.0</version>
         </plugin>
 
-        <!-- Plugin per eseguire l'applicazione -->
+        <!-- Plugin to run the application -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
@@ -106,7 +106,7 @@
           </configuration>
         </plugin>
 
-        <!-- Plugin per generare Javadoc -->
+        <!-- Plugin to generate Javadoc -->
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.11.2</version>
@@ -152,7 +152,7 @@
     </pluginManagement>
     
     <plugins>
-      <!-- Plugin per creare un JAR eseguibile con tutte le dipendenze -->
+      <!-- Plugin to create an executable JAR with all dependencies -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -170,13 +170,14 @@
                 </transformer>
               </transformers>
               <finalName>dijkstra-pathfinding-${project.version}</finalName>
+              <outputDirectory>${project.build.directory}</outputDirectory>
               <createDependencyReducedPom>false</createDependencyReducedPom>
             </configuration>
           </execution>
         </executions>
       </plugin>
       
-      <!-- Plugin JaCoCo per code coverage -->
+      <!-- JaCoCo plugin for code coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -199,7 +200,7 @@
     </plugins>
   </build>
 
-  <!-- Profili per diversi ambienti -->
+  <!-- Profiles for different environments -->
   <profiles>
     <profile>
       <id>development</id>
@@ -215,11 +216,11 @@
       <id>release</id>
       <properties>
         <maven.compiler.debug>false</maven.compiler.debug>
-        <maven.compiler.optimize>true</maven.compiler.optimize>
+        <!-- Removed "optimize" because it is deprecated in javac -->
       </properties>
       <build>
         <plugins>
-          <!-- Plugin per generare JAR con codice sorgente -->
+          <!-- Plugin to generate a JAR with source code -->
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
             <version>3.3.0</version>
@@ -233,7 +234,7 @@
             </executions>
           </plugin>
           
-          <!-- Plugin per generare JAR con Javadoc -->
+          <!-- Plugin to generate a JAR with Javadoc -->
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
             <executions>
@@ -246,7 +247,7 @@
             </executions>
           </plugin>
           
-          <!-- Plugin per creare archivi di distribuzione -->
+          <!-- Plugin to create distribution archives -->
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.7.1</version>
@@ -272,7 +273,7 @@
     </profile>
   </profiles>
 
-  <!-- Configurazione per i report del sito Maven -->
+  <!-- Maven site reporting configuration -->
   <reporting>
     <plugins>
       <plugin>
@@ -326,13 +327,29 @@
           </reportSet>
         </reportSets>
       </plugin>
+
+      <!-- Reporting to generate Test Source XRef -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.3.2</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>jxr</report>
+              <report>test-jxr</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
     </plugins>
   </reporting>
-</project>
-<!--
-  This POM file is used to build the Dijkstra Pathfinding Visualizer application.
-  It includes dependencies, plugins, and configurations necessary for building,
-  testing, and running the application.
+  
+  <!--
+    This POM file is used to build the Dijkstra Pathfinding Visualizer application.
+    It includes dependencies, plugins, and configurations necessary for building,
+    testing, and running the application.
 
-  For more information, visit: https://github.com/davide954/dijkstra-simulator
--->
+    For more information, visit: https://github.com/davide954/dijkstra-simulator
+  -->
+</project>
