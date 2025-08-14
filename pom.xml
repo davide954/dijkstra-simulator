@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Project identifiers -->
   <groupId>com.simulator.dijkstra</groupId>
   <artifactId>dijkstra-simulator</artifactId>
   <version>1.4.0</version>
-  <packaging>jar</packaging>
 
   <name>Dijkstra Pathfinding Visualizer</name>
   <description>A Java Swing application that demonstrates the Dijkstra shortest path algorithm with real-time visualization</description>
   <url>https://github.com/davide954/dijkstra-simulator</url>
 
-  <!-- SCM info (useful for deployment and release plugins) -->
-  <scm>
-    <connection>scm:git:https://github.com/davide954/dijkstra-simulator.git</connection>
-    <developerConnection>scm:git:ssh://github.com/davide954/dijkstra-simulator.git</developerConnection>
-    <url>https://github.com/davide954/dijkstra-simulator</url>
-  </scm>
-
-  <!-- Java compilation settings -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Standardizzato su Java 17 per compatibilità con GitHub Actions -->
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
-  <!-- Project dependencies -->
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -40,23 +28,21 @@
     </dependency>
   </dependencies>
 
-  <!-- Build configuration -->
   <build>
     <pluginManagement>
       <plugins>
-        <!-- Lifecycle: clean -->
+        <!-- clean lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.3.2</version>
         </plugin>
-
-        <!-- Lifecycle: resources -->
+        
+        <!-- default lifecycle, jar packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.1</version>
         </plugin>
-
-        <!-- Lifecycle: compile -->
+        
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.12.1</version>
@@ -66,14 +52,12 @@
             <release>17</release>
           </configuration>
         </plugin>
-
-        <!-- Lifecycle: test -->
+        
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>3.2.5</version>
         </plugin>
-
-        <!-- Lifecycle: package -->
+        
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.3.0</version>
@@ -90,31 +74,29 @@
             </archive>
           </configuration>
         </plugin>
-
-        <!-- Lifecycle: install -->
+        
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>3.1.1</version>
         </plugin>
-
-        <!-- Lifecycle: deploy -->
+        
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>3.1.1</version>
         </plugin>
-
-        <!-- Lifecycle: site -->
+        
+        <!-- site lifecycle -->
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>4.0.0-M13</version>
         </plugin>
-
+        
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.5.0</version>
         </plugin>
 
-        <!-- Run application -->
+        <!-- Plugin per eseguire l'applicazione -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
@@ -123,11 +105,54 @@
             <mainClass>com.simulator.dijkstra.DijkstraPathfinding</mainClass>
           </configuration>
         </plugin>
+
+        <!-- Plugin per generare Javadoc -->
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.11.2</version>
+          <configuration>
+            <source>17</source>
+            <target>17</target>
+            <encoding>UTF-8</encoding>
+            <charset>UTF-8</charset>
+            <docencoding>UTF-8</docencoding>
+            <show>private</show>
+            <nohelp>true</nohelp>
+            <failOnError>false</failOnError>
+            <failOnWarnings>false</failOnWarnings>
+            <additionalJOptions>
+              <additionalJOption>-Xdoclint:none</additionalJOption>
+            </additionalJOptions>
+            <windowTitle>${project.name} - API Documentation</windowTitle>
+            <doctitle>${project.name} v${project.version} - API Documentation</doctitle>
+            <bottom>
+              <![CDATA[
+                Copyright &#169; 2025 ${project.name}. All rights reserved.<br/>
+                Generated on {currentDate}
+              ]]>
+            </bottom>
+            <links>
+              <link>https://docs.oracle.com/en/java/javase/17/docs/api/</link>
+            </links>
+            <author>true</author>
+            <version>true</version>
+            <use>true</use>
+            <splitindex>true</splitindex>
+          </configuration>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
-
+    
     <plugins>
-      <!-- Create a self-contained executable JAR (with dependencies) -->
+      <!-- Plugin per creare un JAR eseguibile con tutte le dipendenze -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -150,10 +175,31 @@
           </execution>
         </executions>
       </plugin>
+      
+      <!-- Plugin JaCoCo per code coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
-  <!-- Profiles for different environments -->
+  <!-- Profili per diversi ambienti -->
   <profiles>
     <profile>
       <id>development</id>
@@ -164,25 +210,124 @@
         <maven.compiler.debug>true</maven.compiler.debug>
       </properties>
     </profile>
-
+    
     <profile>
       <id>release</id>
       <properties>
         <maven.compiler.debug>false</maven.compiler.debug>
         <maven.compiler.optimize>true</maven.compiler.optimize>
       </properties>
+      <build>
+        <plugins>
+          <!-- Plugin per generare JAR con codice sorgente -->
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <!-- Plugin per generare JAR con Javadoc -->
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          
+          <!-- Plugin per creare archivi di distribuzione -->
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.7.1</version>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>bin</descriptorRef>
+                <descriptorRef>src</descriptorRef>
+              </descriptorRefs>
+              <finalName>dijkstra-simulator-${project.version}</finalName>
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
-  <!-- Deployment configuration for GitHub Packages -->
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
-    </repository>
-  </distributionManagement>
-
+  <!-- Configurazione per i report del sito Maven -->
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.5.0</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>index</report>
+              <report>summary</report>
+              <report>dependency-info</report>
+              <report>modules</report>
+              <report>team</report>
+              <report>scm</report>
+              <report>issue-management</report>
+              <report>dependencies</report>
+              <report>dependency-convergence</report>
+              <report>plugin-management</report>
+              <report>plugins</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.11.2</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>
 <!--
   This POM file is used to build the Dijkstra Pathfinding Visualizer application.
