@@ -35,7 +35,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * - Use control buttons to run algorithm, reset grid, or clear path
  *
  * @author bugubster13
- * @version 1.0
+ * @version 1.4.1
  * @since 2025
  */
 public class DijkstraPathfinding extends JFrame {
