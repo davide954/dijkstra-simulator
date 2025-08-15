@@ -11,6 +11,46 @@
   <description>A Java Swing application that demonstrates the Dijkstra shortest path algorithm with real-time visualization</description>
   <url>https://github.com/davide954/dijkstra-simulator</url>
 
+  <!-- License information for deployment -->
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- Developer information for deployment -->
+  <developers>
+    <developer>
+      <id>davide954</id>
+      <name>Davide Polato</name>
+      <email>davide.polato@example.com</email>
+      <url>https://github.com/davide954</url>
+    </developer>
+  </developers>
+
+  <!-- SCM information for deployment -->
+  <scm>
+    <connection>scm:git:git://github.com/davide954/dijkstra-simulator.git</connection>
+    <developerConnection>scm:git:ssh://github.com:davide954/dijkstra-simulator.git</developerConnection>
+    <url>https://github.com/davide954/dijkstra-simulator/tree/main</url>
+  </scm>
+
+  <!-- Distribution management - configure according to your repository -->
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
+    </repository>
+    <snapshotRepository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Standardized to Java 17 for compatibility with GitHub Actions -->
@@ -148,6 +188,36 @@
             </execution>
           </executions>
         </plugin>
+
+        <!-- Plugin to generate source JAR -->
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.0</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- GPG plugin for signing (needed for Maven Central deployment) -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>3.1.0</version>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     
@@ -197,6 +267,16 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Source plugin (always attached) -->
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+
+      <!-- Javadoc plugin (always attached) -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
@@ -216,37 +296,9 @@
       <id>release</id>
       <properties>
         <maven.compiler.debug>false</maven.compiler.debug>
-        <!-- Removed "optimize" because it is deprecated in javac -->
       </properties>
       <build>
         <plugins>
-          <!-- Plugin to generate a JAR with source code -->
-          <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.0</version>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          
-          <!-- Plugin to generate a JAR with Javadoc -->
-          <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          
           <!-- Plugin to create distribution archives -->
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
@@ -268,8 +320,41 @@
               </execution>
             </executions>
           </plugin>
+
+          <!-- GPG signing for Maven Central -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+          </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>github-deploy</id>
+      <distributionManagement>
+        <repository>
+          <id>github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/davide954/dijkstra-simulator</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+
+    <profile>
+      <id>ossrh-deploy</id>
+      <distributionManagement>
+        <repository>
+          <id>ossrh</id>
+          <name>Central Repository OSSRH</name>
+          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <name>Central Repository OSSRH</name>
+          <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+      </distributionManagement>
     </profile>
   </profiles>
 
@@ -348,7 +433,7 @@
   <!--
     This POM file is used to build the Dijkstra Pathfinding Visualizer application.
     It includes dependencies, plugins, and configurations necessary for building,
-    testing, and running the application.
+    testing, running, and deploying the application.
 
     For more information, visit: https://github.com/davide954/dijkstra-simulator
   -->
