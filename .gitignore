@@ -1,8 +1,10 @@
-# Maven output
-/target/
-/dependency-reduced-pom.xml
-/buildNumber.properties
-/release.properties
+# =========================
+# Maven build output
+# =========================
+target/
+dependency-reduced-pom.xml
+buildNumber.properties
+release.properties
 
 # Maven release plugin backups
 pom.xml.tag
@@ -10,21 +12,33 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 
-# Maven wrapper (optional to ignore the .jar)
+# Maven wrapper (optional - ignore .jar if desired)
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse files
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+out/
+
+# =========================
+# Eclipse IDE
+# =========================
 .project
 .classpath
-
-# Eclipse metadata and working directories
 .settings/
 bin/
 
-# OS-specific
+# =========================
+# OS-specific files
+# =========================
 .DS_Store
 Thumbs.db
 
-# Ignore Maven user settings file
-/settings.xml
+# =========================
+# Local configuration (do not version)
+# =========================
+settings.xml
